@@ -1,11 +1,11 @@
 class Cell
-  attr_reader :coordinate, :ship, :empty, :fired_upon, :render
+  attr_reader :coordinate, :ship, :empty, :fired_upon, :status
   def initialize(coordinate, ship = nil)
     @coordinate = coordinate.upcase
     @ship = ship
     @empty = true
     @fired_upon = false
-    @render = "."
+    @status = "."
   end
   
   def empty?
@@ -31,20 +31,22 @@ class Cell
     end 
     @fired_upon = true
     if empty == true
-      @render = "M"
+      @status = "M"
       "you missed lul"
     else
-      @render = "H"
+      @status = "H"
       @ship.hit
     end
   end
 
   # Resolve the render issue, prop vs method
-  def render(bool)
-    if bool == true
-      if @empty == false
-        "S"
-      end
+  def render(bool = false)
+    if bool && !@empty
+      return "S"
     end
+    if @ship != nil && @ship.sunk 
+      return "X"
+    end
+    @status
   end
 end
