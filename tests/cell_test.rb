@@ -7,7 +7,7 @@ require_relative "../lib/cell.rb";
 class CellTest < Minitest::Test
   # setup
   def setup
-    @ship = Ship.new("cruiser", 3)
+    @ship = Ship.new("cruiser", 2)
     @cell_1 = Cell.new("b4")
   end
   # it should exist 
@@ -104,7 +104,26 @@ class CellTest < Minitest::Test
     assert_equal "H", @cell_1.render
   end
 
-  def test_it_returns_the_cell_empty_status_when_render_is_invoked_with_true_arg
+  # test is returns "S" if cell is not empty and bool true passed in render arg
+  def test_it_returns_the_s_status_when_render_is_invoked_with_true_arg
+    @cell_1.place_ship(@ship)
+    assert_equal "S", @cell_1.render(true)
+  end
 
+  # it should return "X" if the ship that was cotained in the cell has been sunk
+  def test_it_returns_X_if_ship_occupying_cell_has_been_sunk
+    # place ship in two cells (ship has 2 health)
+    @cell_1.place_ship(@ship)
+    @cell_2 = Cell.new("a4")
+    @cell_2.place_ship(@ship)
+    # ship should not be sunk
+    assert_equal false, @ship.sunk?
+    #fire twice
+    @cell_1.fire_upon
+    @cell_2.fire_upon
+    #test that ship has no health and both cells respond with "X"
+    assert_equal 0, @ship.health
+    assert_equal "X", @cell_1.render
+    assert_equal "X", @cell_2.render
   end
 end
