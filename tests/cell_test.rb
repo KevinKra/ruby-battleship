@@ -54,6 +54,57 @@ class CellTest < Minitest::Test
   end
 
   # it should return false by default when fired_upon is called.
+  def test_it_returns_false_when_fired_upon_is_invoked
+    assert_equal false, @cell_1.fired_upon
+  end
 
-  # 
+  # it should reduce the health of the ship in the cell when .fire_upon is called
+  def test_it_reduces_health_of_ship_in_cell_when_fired_upon
+    assert_equal @ship.health, @ship.length
+    @cell_1.place_ship(@ship)
+    @cell_1.fire_upon
+    assert_equal @ship.health, @ship.length - 1
+  end
+
+  def test_it_returns_a_string_if_cell_is_empty_and_is_fired_upon
+    response = "you missed lul"
+    assert_equal response, @cell_1.fire_upon
+    assert_equal @ship.health, @ship.length
+    assert_equal true, @cell_1.fired_upon
+  end
+
+  def test_it_returns_a_string_if_cell_has_already_been_fired_upon
+    response = "you missed lul"
+    response_2 = "You've already targeted this coord, wut u doin"
+    # test misses on cell
+    assert_equal response, @cell_1.fire_upon
+    assert_equal response_2, @cell_1.fire_upon
+    assert_equal @ship.health, @ship.length
+    # test hits on cell
+    @cell_2 = Cell.new("a4")
+    @cell_2.place_ship(@ship)
+    @cell_2.fire_upon
+    assert_equal @ship.health, @ship.length - 1
+    assert_equal response_2, @cell_2.fire_upon
+    assert_equal @ship.health, @ship.length - 1
+  end
+
+  def test_it_returns_period_when_render_method_is_initially_called
+    assert_equal ".", @cell_1.render
+  end
+
+  def test_it_returns_M_if_missed
+    @cell_1.fire_upon
+    assert_equal "M", @cell_1.render
+  end
+
+  def test_it_returns_H_if_hit
+    @cell_1.place_ship(@ship)
+    @cell_1.fire_upon
+    assert_equal "H", @cell_1.render
+  end
+
+  def test_it_returns_the_cell_empty_status_when_render_is_invoked_with_true_arg
+
+  end
 end
