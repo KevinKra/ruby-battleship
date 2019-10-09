@@ -1,5 +1,7 @@
 class Cell
-  attr_reader :coordinate, :ship, :empty, :fired_upon, :status
+  attr_reader :coordinate, :ship, :fired_upon, :status
+  attr_accessor :empty
+  
   def initialize(coordinate, ship = nil)
     @coordinate = coordinate.upcase
     @ship = ship
@@ -7,7 +9,7 @@ class Cell
     @fired_upon = false
     @status = "."
   end
-  
+
   def empty?
     @empty
   end
@@ -28,7 +30,7 @@ class Cell
   def fire_upon
     if @fired_upon == true
       return "You've already targeted this coord, wut u doin"
-    end 
+    end
     @fired_upon = true
     if empty == true
       @status = "M"
@@ -44,7 +46,7 @@ class Cell
     if bool && !@empty
       return "S"
     end
-    if @ship != nil && @ship.sunk 
+    if @ship != nil && @ship.sunk
       return "X"
     end
     @status
