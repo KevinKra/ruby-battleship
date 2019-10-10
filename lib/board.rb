@@ -1,5 +1,6 @@
 require_relative './cell'
 require_relative './ship'
+require 'pry'
 
 class Board
 
@@ -36,6 +37,8 @@ def generate_game
     check_elements_empty(valid)
     #coordinates are consecutive
 
+    #add check for "A5"
+
   end
 
   def check_elements_empty(array)
@@ -45,6 +48,10 @@ def generate_game
     output = array.include?(false)
     !output
   end
+
+#new method for output
+#split into hash
+#look into uniq
 
   def check_if_sequential(array)
     output = []
@@ -63,25 +70,23 @@ def generate_game
     def compare_sort(num_array, alph_array)
       letter = alph_array.first
       letters_result = alph_array.find_all { |element| element == letter}
-      if  letters_result.length == alph_array.length
-        # Y letters are the same
-        # Y check are numbers sequential
-        ordered_array = num_array.sort
-        num_array == ordered_array
-        # N check for skipped numbers
-         # for i in 1..num_array.length do
-         #   num_array[i] == num_array[i + 1] + 1
-      #end
-      else
-        # Y letters are not the same
-        # Y check that letters are alphabetical
-        a_array = alph_array.sort
-        if alph_array == a_array
-        end
-          # N with no skips and the numbers are the same
+
+      number = num_array.first
+      number_result = num_array.find_all { |element| element == number}
+
+      ordered_array = num_array.sort
+      a_array = alph_array.sort
+
+      # binding.pry
+    if (letters_result.length == alph_array.length) && (num_array.sort == num_array) && ((num_array[0]..num_array[-1]).to_a == num_array)
+      true
+    elsif
+        (number_result.length == num_array.length) && (alph_array.sort == alph_array) && ((alph_array[0]..alph_array[-1]).to_a == alph_array)
+        true
+
+        else false
       end
     end
-
     compare_sort(numerical_array, alphabetical_array)
   end
 end
