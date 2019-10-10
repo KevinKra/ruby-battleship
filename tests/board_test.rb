@@ -34,9 +34,27 @@ def test_the_placement_is_valid
   assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
 end
 
-#test the output of sequential array
-def test_if_sequential
-  #assert_equal true, @board.check_if_sequential(["A1", "A2"])
+#test the output of sequential array (does not handle skipped numbers)
+def test_if_same_letter_and_sequential_numbers
   assert_equal false, @board.check_if_sequential(["A2", "A1"])
+  assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
+  assert_equal false, @board.check_if_sequential(["A4", "A3", "A1"])
 end
+
+#test if different letters and same number (does not handle skipped letters)
+  def test_if_different_letters_and_same_number
+    assert_equal false, @board.check_if_sequential(["D1", "B2", "C2"])
+    assert_equal false, @board.check_if_sequential(["D1", "B2"])
+    assert_equal true, @board.check_if_sequential(["A1", "B1", "C1"])
+  end
+
+# def test_letters_are_not_skipped
+#   assert_equal "false", @board.check_if_sequential(["A1", "C1"])
+#   assert_equal "true", @board.check_if_sequential(["A1", "B1"])
+# end
+#
+# def test_numbers_are_not_skipped
+#   assert_equal "false", @board.check_if_sequential(["A1", "A2", "A4"])
+#   assert_equal "true", @board.check_if_sequential(["A1", "A2", "A3"])
+# end
 end

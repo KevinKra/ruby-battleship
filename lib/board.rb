@@ -64,16 +64,21 @@ def generate_game
       letter = alph_array.first
       letters_result = alph_array.find_all { |element| element == letter}
       if  letters_result.length == alph_array.length
-        # Y check to see if letters are the same, if yes,
+        # Y letters are the same
         # Y check are numbers sequential
         ordered_array = num_array.sort
         num_array == ordered_array
         # N check for skipped numbers
+         # for i in 1..num_array.length do
+         #   num_array[i] == num_array[i + 1] + 1
+      #end
       else
-        # Y check to see if letters are the same
-        # N check that letters are alphabetical
-        
-        # N with no skips and the numbers are the same
+        # Y letters are not the same
+        # Y check that letters are alphabetical
+        a_array = alph_array.sort
+        if alph_array == a_array
+        end
+          # N with no skips and the numbers are the same
       end
     end
 
