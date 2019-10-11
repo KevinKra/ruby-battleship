@@ -36,26 +36,29 @@ class BoardTest< Minitest::Test
 
   #test the output of split arrays
   def test_if_output_splits_elements_into_strings
-    assert_equal [["A", "1"], ["A", "2"]], @board.create_output(["A1", "A2"])
-    # assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
-    # assert_equal false, @board.check_if_sequential(["A4", "A3", "A1"])
-    # assert_equal false, @board.check_if_sequential(["A1", "A2", "A4"])
-   end
-#
-  #test if different letters and same number
-    def test_if_different_letters_and_same_number
-       assert_equal true, @board.check_if_sequential(["A1", "A2"])
-       assert_equal false, @board.check_if_sequential(["D1", "B2"])
-       assert_equal true, @board.check_if_sequential(["A1", "B1", "C1"])
-    end
-#
-#   def test_letters_are_not_skipped
-#     assert_equal false, @board.check_if_sequential(["A1", "C1"])
-#     assert_equal true, @board.check_if_sequential(["A1", "B1"])
-#   end
-#
-#   def test_numbers_are_not_skipped
-#     assert_equal false, @board.check_if_sequential(["A1", "A2", "A4"])
-#     assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
-#   end
- end
+    assert_equal [["A", "A"], ["1", "2"]], @board.create_output(["A1", "A2"])
+  end
+
+  def test_if_different_letters_and_same_number
+     assert_equal true, @board.check_if_sequential(["A1", "A2"])
+     assert_equal false, @board.check_if_sequential(["D1", "B2"])
+     assert_equal true, @board.check_if_sequential(["A1", "B1", "C1"])
+  end
+
+  def test_letters_are_not_skipped
+    assert_equal false, @board.check_if_sequential(["A1", "C1"])
+    assert_equal true, @board.check_if_sequential(["A1", "B1", "C1"])
+  end
+
+  def test_numbers_are_sequential_and_not_skipped
+    assert_equal false, @board.check_if_sequential(["A1", "A2", "A4"])
+    assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
+    assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
+    assert_equal false, @board.check_if_sequential(["A4", "A3", "A1"])
+    assert_equal false, @board.check_if_sequential(["A1", "A2", "A4"])
+  end
+  # 
+  # def test_coordinates_are_on_board
+  #   assert_equal false, @board.valid_placement?(@cruiser, (["A3", "A4", "A5"]))
+  # end
+end
