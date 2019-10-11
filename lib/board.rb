@@ -9,8 +9,6 @@ attr_reader :board, :cells
 def initialize
   @board = board
   @cells = generate_game
-  @alphabetical_array = []
-  @numerical_array = []
 end
 
   def generate_game
@@ -18,11 +16,11 @@ end
                     "B1", "B2", "B3", "B4",
                     "C1", "C2", "C3", "C4",
                     "D1", "D2", "D3", "D4" ]
-        cell_hash = {}
-        coordinates.each do |coordinate|
-        cell_hash["#{coordinate}"] = Cell.new(coordinate)
-      end
-    pp cell_hash
+    cell_hash = {}
+    coordinates.each do |coordinate|
+      cell_hash["#{coordinate}"] = Cell.new(coordinate)
+    end
+    cell_hash
   end
 
   def valid_coordinate(coord)
@@ -35,12 +33,9 @@ end
     coords.each do |coord|
       matching_coord = @cells[coord]
       valid << matching_coord.empty?
+      #add check to see if user input is in coordinates array
     end
     check_elements_empty(valid)
-    #coordinates are consecutive
-
-    #add check for coordinates not on the board
-
   end
 
   def check_elements_empty(array)
@@ -51,49 +46,47 @@ end
     !output
   end
 
-#new method for output
-#split into hash
-#look into uniq
-
-  def create_output(split_strings)
-    output = []
-    split_strings.each do |element|
-      output << element.split('')
+  # Input: ["A1", "A2"]
+  # Output: [["A", "A"], ["1", "2"]]
+  # If this was a hash, the output could be: { location_letters: ["A", "A"], location_numbers: ["1", "2"] }
+  def create_output(board_locations_to_check)
+    split_board_locations = [[], []]
+    board_locations_to_check.each do |board_location|
+      board_location_letter_and_number = board_location.split('')
+      split_board_locations[0] << board_location_letter_and_number[0]
+      split_board_locations[1] << board_location_letter_and_number[1]
     end
+    split_board_locations
   end
 
-    def letter_split(letter_output)
-    letter_output.each do |element|
-      @alphabetical_array << element[0]
-    end
-  @alphabetical_array
+  def is_valid_horizontal_placement(board_alpha_locations, board_numeric_locations, letters_result)
+    (letters_result.length == board_alpha_locations.length) && (board_numeric_locations.sort == board_numeric_locations) && ((board_numeric_locations[0]..board_numeric_locations[-1]).to_a == board_numeric_locations)
   end
 
-  def number_split(number_output)
-      @numerical_array << element[1]
-    end
-    @numerical_array
+  def is_valid_vertical_placement(board_alpha_locations, board_numeric_locations, number_result)
+    (number_result.length == board_numeric_locations.length) && (board_alpha_locations.sort == board_alpha_locations) && ((board_alpha_locations[0]..board_alpha_locations[-1]).to_a == board_alpha_locations)
   end
 
+  # Input: ["A1", "A2"]
+  # Output: true / false
+  def check_if_sequential(board_locations_to_check)
+    split_board_locations = create_output(board_locations_to_check) # [["A", "1"], ["A", "2"]]
+    board_alpha_locations = split_board_locations[0]
+    board_numeric_locations = split_board_locations[1]
 
-  def check_if_sequential(location)
-      letter = @alphabetical_array.first
-      letters_result = @alphabetical_array.find_all { |element| element == letter}
+    letter_first = board_alpha_locations.first
+    letters_result = board_alpha_locations.find_all { |element| element == letter_first}
 
-      number = @numerical_array.first
-      number_result = @numerical_array.find_all { |element| element == number}
-
-      # sorted_ = @alphabetical_array.sort
-      # ordered_array = @numerical_array.sort
+    number_first = board_numeric_locations.first
+    number_result = board_numeric_locations.find_all { |element| element == number_first}
 
 
-    if (letters_result.length == @alphabetical_array.length) && (@numerical_array.sort == @numerical_array) && ((@numerical_array[0]..@numerical_array[-1]) == @numerical_array)
+    if is_valid_horizontal_placement(board_alpha_locations, board_numeric_locations, letters_result)
       true
-    elsif
-        (number_result.length == @numerical_array.length) && (@alphabetical_array.sort == @alphabetical_array) && ((@alphabetical_array[0]..@alphabetical_array[-1]) == @alphabetical_array)
-        true
-
-        else false
-      end
-#      @alphabetical_array
+    elsif is_valid_vertical_placement(board_alpha_locations, board_numeric_locations, number_result)
+      true
+    else
+      false
     end
+  end
+end
