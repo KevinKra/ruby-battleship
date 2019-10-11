@@ -5,6 +5,7 @@ require 'pry'
 class Board
 
 attr_reader :board, :cells
+attr_accessor :empty
 
 def initialize
   @board = board
@@ -30,11 +31,11 @@ end
   def valid_placement?(ship, coords)
     ship.length == coords.length
     valid = []
-    coords.each do |coord|
+    if coords.each do |coord|
       matching_coord = @cells[coord]
       valid << matching_coord.empty?
-      #add check to see if user input is in coordinates array
     end
+   end
     check_elements_empty(valid)
   end
 
@@ -89,4 +90,8 @@ end
       false
     end
   end
-end
+
+    def place(ship, coordinates)
+      empty = false
+    end
+  end
