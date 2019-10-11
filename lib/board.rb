@@ -9,18 +9,20 @@ attr_reader :board, :cells
 def initialize
   @board = board
   @cells = generate_game
+  @alphabetical_array = []
+  @numerical_array = []
 end
 
-def generate_game
-  coordinates = [ "A1", "A2", "A3", "A4",
-                  "B1", "B2", "B3", "B4",
-                  "C1", "C2", "C3", "C4",
-                  "D1", "D2", "D3", "D4" ]
-  cell_hash = {}
-  coordinates.each do |coordinate|
-    cell_hash["#{coordinate}"] = Cell.new(coordinate)
-  end
-  cell_hash
+  def generate_game
+    coordinates = [ "A1", "A2", "A3", "A4",
+                    "B1", "B2", "B3", "B4",
+                    "C1", "C2", "C3", "C4",
+                    "D1", "D2", "D3", "D4" ]
+        cell_hash = {}
+        coordinates.each do |coordinate|
+        cell_hash["#{coordinate}"] = Cell.new(coordinate)
+      end
+    pp cell_hash
   end
 
   def valid_coordinate(coord)
@@ -37,7 +39,7 @@ def generate_game
     check_elements_empty(valid)
     #coordinates are consecutive
 
-    #add check for "A5"
+    #add check for coordinates not on the board
 
   end
 
@@ -53,40 +55,45 @@ def generate_game
 #split into hash
 #look into uniq
 
-  def check_if_sequential(array)
+  def create_output(split_strings)
     output = []
-    array.each do |element|
-    output << element.split('')
+    split_strings.each do |element|
+      output << element.split('')
     end
+  end
 
-    alphabetical_array = []
-    numerical_array = []
-
-    output.each do |element|
-      alphabetical_array << element[0]
-      numerical_array << element[1]
+    def letter_split(letter_output)
+    letter_output.each do |element|
+      @alphabetical_array << element[0]
     end
+  @alphabetical_array
+  end
 
-    def compare_sort(num_array, alph_array)
-      letter = alph_array.first
-      letters_result = alph_array.find_all { |element| element == letter}
+  def number_split(number_output)
+      @numerical_array << element[1]
+    end
+    @numerical_array
+  end
 
-      number = num_array.first
-      number_result = num_array.find_all { |element| element == number}
 
-      ordered_array = num_array.sort
-      a_array = alph_array.sort
+  def check_if_sequential(location)
+      letter = @alphabetical_array.first
+      letters_result = @alphabetical_array.find_all { |element| element == letter}
 
-      # binding.pry
-    if (letters_result.length == alph_array.length) && (num_array.sort == num_array) && ((num_array[0]..num_array[-1]).to_a == num_array)
+      number = @numerical_array.first
+      number_result = @numerical_array.find_all { |element| element == number}
+
+      # sorted_ = @alphabetical_array.sort
+      # ordered_array = @numerical_array.sort
+
+
+    if (letters_result.length == @alphabetical_array.length) && (@numerical_array.sort == @numerical_array) && ((@numerical_array[0]..@numerical_array[-1]) == @numerical_array)
       true
     elsif
-        (number_result.length == num_array.length) && (alph_array.sort == alph_array) && ((alph_array[0]..alph_array[-1]).to_a == alph_array)
+        (number_result.length == @numerical_array.length) && (@alphabetical_array.sort == @alphabetical_array) && ((@alphabetical_array[0]..@alphabetical_array[-1]) == @alphabetical_array)
         true
 
         else false
       end
+#      @alphabetical_array
     end
-    compare_sort(numerical_array, alphabetical_array)
-  end
-end
