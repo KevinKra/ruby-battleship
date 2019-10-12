@@ -45,17 +45,17 @@ end
     !output
   end
 
-  # Input: ["A1", "A2"]
-  # Output: [["A", "A"], ["1", "2"]]
-  # If this was a hash, the output could be: { location_letters: ["A", "A"], location_numbers: ["1", "2"] }
-  def create_output(board_locations_to_check)
-    split_board_locations = [[], []]
-    board_locations_to_check.each do |board_location|
-      board_location_letter_and_number = board_location.split('')
-      split_board_locations[0] << board_location_letter_and_number[0]
-      split_board_locations[1] << board_location_letter_and_number[1]
+
+  def parse_coordinates(coordinates)
+    parsed_coords = [[], []]
+    coordinates.each do |coordinate|
+      letter_number = coordinate.split('')
+      parsed_coords[0] << letter_number[0]
+      parsed_coords[1] << letter_number[1]
     end
-    split_board_locations
+    parsed_coords
+    # input coords: ["A1", "A2"]
+    # parsed output: [["A", "A"], ["1", "2"]]
   end
 
   def is_valid_horizontal_placement(board_alpha_locations, board_numeric_locations, letters_result)
@@ -69,7 +69,7 @@ end
   # Input: ["A1", "A2"]
   # Output: true / false
   def check_if_sequential(board_locations_to_check)
-    split_board_locations = create_output(board_locations_to_check) # [["A", "1"], ["A", "2"]]
+    split_board_locations = parse_coordinates(board_locations_to_check) # [["A", "1"], ["A", "2"]]
     board_alpha_locations = split_board_locations[0]
     board_numeric_locations = split_board_locations[1]
 
