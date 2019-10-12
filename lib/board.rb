@@ -36,9 +36,12 @@ end
       # check each coordinate and shovel boolean accordingly.
       end
     end
-    !coords_empty_status.include?(false)
+    if !coords_empty_status.include?(false)
     # determine if all the booleans are true (true means the coord is not already occupied). 
     # If all bools == true, this means ship can be placed.
+      parsed_coords = parse_coordinates(desired_coords)
+      verify_placement_format(parsed_coords)
+    end
   end
 
   def parse_coordinates(coordinates)
@@ -63,11 +66,11 @@ end
 
   # Input: ["A1", "A2"]
   # Output: true / false
-  def check_if_sequential(board_locations_to_check)
-    split_board_locations = parse_coordinates(board_locations_to_check) # [["A", "1"], ["A", "2"]]
-    board_alpha_locations = split_board_locations[0]
-    board_numeric_locations = split_board_locations[1]
-
+  def verify_placement_format(board_locations_to_check)
+    # split_board_locations = parse_coordinates(board_locations_to_check) # [["A", "1"], ["A", "2"]]
+    board_alpha_locations = board_locations_to_check[0]
+    board_numeric_locations = board_locations_to_check[1]
+    # p board_alpha_locations
     letter_first = board_alpha_locations.first
     letters_result = board_alpha_locations.find_all { |element| element == letter_first}
 
