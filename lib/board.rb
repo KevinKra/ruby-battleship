@@ -1,5 +1,3 @@
-
-
 require 'pry'
 
 class Board
@@ -31,20 +29,19 @@ end
 
 
   def valid_placement?(ship, coords)
-     ship.length == coords.length
-     valid = []
+    valid = []
+    if ship.length == coords.length
      coords.each do |coord|
-      matching_coord = @cells[coord]
-      valid << matching_coord.empty?
+      valid << @cells[coord].empty?
+      # check each coordinate and shovel boolean accordingly.
+      end
     end
     check_elements_empty(valid)
+    # determine if all the booleans are true. If true, this means ship can be placed.
   end
 
   def check_elements_empty(array)
-    #we're checking that all cells are empty (@empty == true),
-    #if any are filled (@empty == false) validator will detect the
-    #false boolean and return true
-    output = array.include?(board.valid_placement?(submarine, ["A2", "A3", "A4"]))
+    output = array.include?(false)
     !output
   end
 
