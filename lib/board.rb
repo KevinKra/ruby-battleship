@@ -91,6 +91,8 @@ end
   end
 
   def place(ship, coordinates)
-    @cell.place_ship(ship)
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
   end
 end
