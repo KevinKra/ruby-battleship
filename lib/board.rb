@@ -1,5 +1,5 @@
-require_relative './cell'
-require_relative './ship'
+
+
 require 'pry'
 
 class Board
@@ -20,22 +20,23 @@ end
     cell_hash = {}
     coordinates.each do |coordinate|
       cell_hash["#{coordinate}"] = Cell.new(coordinate)
+    @board = coordinates
     end
     cell_hash
   end
 
-  def valid_coordinate(coord)
+  def valid_coordinate?(coord)
     @cells.has_key?(coord)
   end
 
+
   def valid_placement?(ship, coords)
-    ship.length == coords.length
-    valid = []
-    if coords.each do |coord|
+     ship.length == coords.length
+     valid = []
+     coords.each do |coord|
       matching_coord = @cells[coord]
       valid << matching_coord.empty?
     end
-   end
     check_elements_empty(valid)
   end
 
@@ -43,7 +44,7 @@ end
     #we're checking that all cells are empty (@empty == true),
     #if any are filled (@empty == false) validator will detect the
     #false boolean and return true
-    output = array.include?(false)
+    output = array.include?(board.valid_placement?(submarine, ["A2", "A3", "A4"]))
     !output
   end
 
@@ -91,7 +92,7 @@ end
     end
   end
 
-    def place(ship, coordinates)
-      empty = false
-    end
+  def place(ship, coordinates)
+    @cell.place_ship(ship)
   end
+end
