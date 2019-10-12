@@ -95,4 +95,26 @@ end
       @cells[coordinate].place_ship(ship)
     end
   end
+
+  def render
+    a = []
+    b = "  1 2 3 4 \n "
+    c = ""
+    arr = ["B", "C", "D"]
+    @cells.each do |cell|
+      cell_key = cell[0]
+      a << @cells[cell_key].status
+    end
+    a.each_with_index do |element, i|
+      c.concat(" #{element}")
+      if (i + 1) % 4 == 0
+        c.concat("\n")
+      end
+      if (i == 3 || i == 7 || i == 11)
+        c.concat(" #{arr.slice!(0)}")
+      end
+    end
+    
+    d = b + "A" + c
+  end
 end
