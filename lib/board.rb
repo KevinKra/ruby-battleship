@@ -28,23 +28,18 @@ end
   end
 
 
-  def valid_placement?(ship, coords)
-    valid = []
-    if ship.length == coords.length
-     coords.each do |coord|
-      valid << @cells[coord].empty?
+  def valid_placement?(ship, desired_coords)
+    coords_empty_status = []
+    if ship.length == desired_coords.length
+     desired_coords.each do |coord|
+      coords_empty_status << @cells[coord].empty?
       # check each coordinate and shovel boolean accordingly.
       end
     end
-    check_elements_empty(valid)
-    # determine if all the booleans are true. If true, this means ship can be placed.
+    !coords_empty_status.include?(false)
+    # determine if all the booleans are true (true means the coord is not already occupied). 
+    # If all bools == true, this means ship can be placed.
   end
-
-  def check_elements_empty(array)
-    output = array.include?(false)
-    !output
-  end
-
 
   def parse_coordinates(coordinates)
     parsed_coords = [[], []]
