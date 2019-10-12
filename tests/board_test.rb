@@ -23,8 +23,8 @@ class BoardTest< Minitest::Test
 
   #test it validates coordinates
   def test_the_coordinates_are_valid
-    assert_equal true, @board.valid_coordinate("A1")
-    assert_equal false, @board.valid_coordinate("ZZ")
+    assert_equal true, @board.valid_coordinate?("A1")
+    assert_equal false, @board.valid_coordinate?("ZZ")
   end
 
   #test if placement is valid
@@ -36,26 +36,26 @@ class BoardTest< Minitest::Test
 
   #test the output of split arrays
   def test_if_output_splits_elements_into_strings
-    assert_equal [["A", "A"], ["1", "2"]], @board.create_output(["A1", "A2"])
+    assert_equal [["A", "A"], ["1", "2"]], @board.parse_coordinates(["A1", "A2"])
   end
 
   def test_if_different_letters_and_same_number
-     assert_equal true, @board.check_if_sequential(["A1", "A2"])
-     assert_equal false, @board.check_if_sequential(["D1", "B2"])
-     assert_equal true, @board.check_if_sequential(["A1", "B1", "C1"])
+     assert_equal true, @board.verify_placement_format([["A", "A"],["1", "2"]])
+     assert_equal false, @board.verify_placement_format([["D", "B"],["1","2"]])
+     assert_equal true, @board.verify_placement_format([["A", "B", "C"], ["1", "1", "1"]])
   end
 
   def test_letters_are_not_skipped
-    assert_equal false, @board.check_if_sequential(["A1", "C1"])
-    assert_equal true, @board.check_if_sequential(["A1", "B1", "C1"])
+    assert_equal false, @board.verify_placement_format([["A", "C"],["1", "1"]])
+    assert_equal true, @board.verify_placement_format([["A", "B", "C"], ["1", "1", "1"]])
   end
 
   def test_numbers_are_sequential_and_not_skipped
-    assert_equal false, @board.check_if_sequential(["A1", "A2", "A4"])
-    assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
-    assert_equal true, @board.check_if_sequential(["A1", "A2", "A3"])
-    assert_equal false, @board.check_if_sequential(["A4", "A3", "A1"])
-    assert_equal false, @board.check_if_sequential(["A1", "A2", "A4"])
+    assert_equal false, @board.verify_placement_format([["A", "A", "A"],["1", "2", "4"]])
+    assert_equal true, @board.verify_placement_format([["A", "A", "A"],["1", "2", "3"]])
+    assert_equal true, @board.verify_placement_format([["A", "A", "A"],["1", "2", "3"]])
+    assert_equal false, @board.verify_placement_format([["A", "A", "A"], ["4", "3", "1"]])
+    assert_equal false, @board.verify_placement_format([["A", "A", "A"], ["1","2","4"]])
   end
   # 
   # def test_coordinates_are_on_board
