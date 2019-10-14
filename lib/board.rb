@@ -96,14 +96,25 @@ end
     end
   end
 
-  def render
+  def render(show_true_state = false)
     a = []
     b = "  1 2 3 4 \n "
     c = ""
     arr = ["B", "C", "D"]
-    @cells.each do |cell|
-      cell_key = cell[0]
-      a << @cells[cell_key].status
+    if !show_true_state
+      @cells.each do |cell|
+        cell_key = cell[0]
+        a << @cells[cell_key].status
+      end
+    else
+      @cells.each do |cell|
+        cell_key = cell[0]
+        if !@cells[cell_key].empty
+          a << "S"
+        else
+          a << @cells[cell_key].status
+        end
+      end
     end
     a.each_with_index do |element, i|
       c.concat(" #{element}")
