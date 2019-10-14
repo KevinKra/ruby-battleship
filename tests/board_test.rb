@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/cell'
+require_relative "../lib/cell"
 require_relative '../lib/ship'
 require_relative '../lib/board'
 
@@ -57,8 +57,12 @@ class BoardTest< Minitest::Test
     assert_equal false, @board.verify_placement_format([["A", "A", "A"], ["4", "3", "1"]])
     assert_equal false, @board.verify_placement_format([["A", "A", "A"], ["1","2","4"]])
   end
-  # 
-  # def test_coordinates_are_on_board
-  #   assert_equal false, @board.valid_placement?(@cruiser, (["A3", "A4", "A5"]))
-  # end
+
+  def test_it_places_ship_on_board 
+    @board.place(@cruiser, ["A1", "A2", "A3"]) 
+    assert_equal false, @board.cells["A1"].empty?
+    assert_equal false, @board.cells["A2"].empty?
+    assert_equal false, @board.cells["A3"].empty?
+    assert_equal true, @board.cells["A4"].empty?
+  end
 end
