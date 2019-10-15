@@ -9,18 +9,24 @@ class Play
     puts "Welcome to BATTLESHIP"
     puts "Enter 'P' to play. Press 'Q' to quit."
     print "> "
-    user_input = gets.chomp
+    user_input = gets.chomp.upcase
 
-    while user_input.downcase != "p" || user_input.downcase != "q" do
+    until user_input == "P" || user_input == "Q" do 
+      puts "Please enter a valid command."
+      print "> "
+      user_input = gets.chomp.upcase
+    end
+
+    if user_input == "P"
+      @play_game = true
+      puts "Game Started!"
+    elsif user_input == "Q"
+        puts "Goodbye!"
+    else 
       puts "Please enter a valid command."
       print "> "
       user_input = gets.chomp
-
-    if user_input.downcase == "p"
-      @play_game = true
-    elsif user_input.downcase == "q"
-      puts "Goodbye!"
     end
-    end
+    
   end
 end
