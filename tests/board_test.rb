@@ -65,4 +65,12 @@ class BoardTest< Minitest::Test
     assert_equal false, @board.cells["A3"].empty?
     assert_equal true, @board.cells["A4"].empty?
   end
+
+  def test_it_does_not_display_ship_locations_on_render_false
+    false_board = "  1 2 3 4 \n A . . . . \n B . . . . \n C . . . . \n D . . . . \n"
+    true_board = "  1 2 3 4 \n A S S S . \n B . . . . \n C . . . . \n D . . . . \n"
+    @board.place(@cruiser, ["A1", "A2", "A3"]) 
+    assert_equal false_board, @board.render
+    assert_equal true_board, @board.render(true)
+  end
 end
