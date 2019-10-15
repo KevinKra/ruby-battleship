@@ -2,44 +2,41 @@ require 'pry'
 
 class Board
 
-attr_reader :board, :cells
-attr_accessor :empty
+  attr_reader :board
+  attr_accessor :empty, :cells
 
-def initialize
-  @board = board
-  @cells = generate_game
-end
+  def initialize
+    @board = board
+    @cells = {}
+  end
 
   def generate_game
     coordinates = [ "A1", "A2", "A3", "A4",
                     "B1", "B2", "B3", "B4",
                     "C1", "C2", "C3", "C4",
                     "D1", "D2", "D3", "D4" ]
-    cell_hash = {}
-    coordinates.each do |coordinate|
-      cell_hash["#{coordinate}"] = Cell.new(coordinate)
-    @board = coordinates
+      coordinates.each do |coordinate|
+      @cells[coordinate] = Cell.new(coordinate)
     end
-    cell_hash
+    coordinates
   end
 
   def valid_coordinate?(coord)
-    @cells.has_key?(coord)
+    @cells.keys.include?(coord)
   end
-
 
   def valid_placement?(ship, desired_coords)
     coords_empty_status = []
     if ship.length == desired_coords.length
       desired_coords.each do |coord|
-        coords_empty_status << @cells[coord].empty?
+        coords_empty_status << @cells.empty?
         # check each coordinate and shovel boolean accordingly.
       end
-    else 
+    else
       return false
     end
     if !coords_empty_status.include?(false)
-      # determine if all the booleans are true (true means the coord is not already occupied). 
+      # determine if all the booleans are true (true means the coord is not already occupied).
       # If all bools == true, this means ship can be placed.
         parsed_coords = parse_coordinates(desired_coords)
         verify_placement_format(parsed_coords)
@@ -94,6 +91,7 @@ end
     coordinates.each do |coordinate|
       @cells[coordinate].place_ship(ship)
     end
+    @cells
   end
 
   def render
@@ -114,7 +112,7 @@ end
         c.concat(" #{arr.slice!(0)}")
       end
     end
-    
+
     d = b + "A" + c
   end
 end
