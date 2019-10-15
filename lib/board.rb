@@ -109,7 +109,7 @@ end
     else
       @cells.each do |cell|
         cell_key = cell[0]
-        if !@cells[cell_key].empty
+        if !@cells[cell_key].empty && @cells[cell_key].status == "."
           a << "S"
         else
           a << @cells[cell_key].status
@@ -119,13 +119,14 @@ end
     a.each_with_index do |element, i|
       c.concat(" #{element}")
       if (i + 1) % 4 == 0
-        c.concat("\n")
+        c.concat(" \n")
       end
       if (i == 3 || i == 7 || i == 11)
         c.concat(" #{arr.slice!(0)}")
       end
     end
     
-    d = b + "A" + c
+    b.concat("A" + c)
+
   end
 end
