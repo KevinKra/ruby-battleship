@@ -5,21 +5,40 @@
 # until
 #
 # board.sample(ship_placement)
+  #ship.length
 # until ship_placement
 class Round
 
+attr_accessor :computer_player, :live_player
 
-  def initialize
+  def initialize (computer_player = nil, live_player = nil)
      @computer_board = {}
+     @computer_player = computer_player
+
      @player_board = {}
+     @live_player = live_player
   end
 
-  def create_boards
+  def game_setup
+
     @computer_board = Board.new
     @computer_board.generate_game
+    @computer_player = Computer.new
 
     @player_board = Board.new
     @player_board.generate_game
+    @live_player = LivePlayer.new
+
+    require 'pry', binding.pry
+
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    @computer_player.add_computer_ships(cruiser)
+    @computer_player.add_computer_ships(submarine)
+
+    @live_player.add_player_ships(cruiser)
+    @live_player.add_player_ships(submarine)
   end
 
   def ships_placed_by_computer
@@ -61,7 +80,7 @@ class Round
 
   def turn
   end
-  
+end
   # The Turn
   # During the main game, players take turns firing at one another by selecting positions on the grid to attack.
   #
