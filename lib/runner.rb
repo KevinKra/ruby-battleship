@@ -1,7 +1,7 @@
 require "./board.rb"
 require "./cell.rb"
 require "./ship.rb"
-require "./play_game.rb"
+require "./play.rb"
 require 'pry'
 
 board = Board.new()
