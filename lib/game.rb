@@ -50,19 +50,22 @@ class Game
     setup_game
     # start turns
     turn
+    turn
+    turn
   end
 
   def turn
     @current_turn += 1
     display_turn_boards
-    shoot_prompt
+    shooting_phase
   end
 
-  def shoot_prompt
+  def shooting_phase
     puts
     puts "Enter the coordinate for your shot:"
     print "> "
     @human_player.shoot(@computer_board)
+    @computer_player.shoot(@player_board)
   end
 
   def display_turn_boards
