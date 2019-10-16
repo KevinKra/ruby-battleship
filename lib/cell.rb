@@ -16,7 +16,7 @@ class Cell
 
   def place_ship(ship)
     if empty == false
-      "there is already a ship placed in this cell!"
+      "There is already a ship placed in this cell!"
     else
       @ship = ship
       @empty = false
@@ -27,17 +27,18 @@ class Cell
     @fired_upon
   end
 
-  def fire_upon
+  def fire_upon(computer = false)
     if @fired_upon == true
-      return "You've already targeted this coord, wut u doin"
+      return "You've already targeted this coordinate!"
     end
     @fired_upon = true
     if empty == true
       @status = "M"
-      "you missed lul"
+      computer ? "The computer's shot on #{@coordinate} was a miss." : "Your shot on #{@coordinate} was a miss."
     else
       @status = "H"
       @ship.hit
+      computer ? "The computer just got a hit on #{@coordinate}!" : "That's a hit!"
     end
   end
 

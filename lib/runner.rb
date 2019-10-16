@@ -1,30 +1,24 @@
 require "./board.rb"
 require "./cell.rb"
 require "./ship.rb"
+require "./game.rb"
+require_relative "./computer_player.rb"
 require 'pry'
 
-board = Board.new()
+computer_board = Board.new
+player_board = Board.new
 submarine = Ship.new("Submarine", 2)
-
-# a = [".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".",]
-# b = "  1 2 3 4 \n "
-# c = ""
-# arr = ["B", "C", "D"]
-# a.each_with_index do |element, i|
-#   c.concat(" #{element}")
-#   if (i + 1) % 4 == 0
-#     c.concat("\n")
-#   end
-#   if (i == 3 || i == 7 || i == 11)
-#     c.concat(" #{arr.slice!(0)}")
-#   end
-# end
-
-# d = b + "A" + c
-
 cruiser = Ship.new("Cruiser", 3)
-board.place(cruiser, ["A1", "A2", "A3"])
-board.render
+cruiser2 = Ship.new("Cruiser", 3)
+computer_player = ComputerPlayer.new
+game = Game.new
+
+# board.place(cruiser, ["A1", "A2", "A3"])
+# board.place(submarine, ["C1", "C2"])
+# binding.pry
+# computer_player.place_ships_on_board([cruiser, submarine], computer_board)
 
 
-binding.pry
+game.init_game
+
+

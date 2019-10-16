@@ -1,4 +1,4 @@
-require 'pry'
+require_relative "./cell.rb"
 
 class Board
 
@@ -91,30 +91,52 @@ end
   end
 
   def place(ship, coordinates)
-    coordinates.each do |coordinate|
-      @cells[coordinate].place_ship(ship)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
+      end
+    else
+      puts
+      puts ">> Player:"
+      puts " Those are invalid coordinates. Please try again:"
+      print "> "
+      coordinates = gets.chomp.upcase.split(" ")
+      puts
+      place(ship, coordinates)
     end
   end
 
-  def render
+  def render(show_true_state = false)
     a = []
-    b = "  1 2 3 4 \n "
+    b = "   1 2 3 4 \n "
     c = ""
     arr = ["B", "C", "D"]
-    @cells.each do |cell|
-      cell_key = cell[0]
-      a << @cells[cell_key].status
+    if !show_true_state
+      @cells.each do |cell|
+        cell_key = cell[0]
+        a << @cells[cell_key].status
+      end
+    else
+      @cells.each do |cell|
+        cell_key = cell[0]
+        if !@cells[cell_key].empty && @cells[cell_key].status == "."
+          a << "S"
+        else
+          a << @cells[cell_key].status
+        end
+      end
     end
     a.each_with_index do |element, i|
       c.concat(" #{element}")
       if (i + 1) % 4 == 0
-        c.concat("\n")
+        c.concat(" \n")
       end
       if (i == 3 || i == 7 || i == 11)
         c.concat(" #{arr.slice!(0)}")
       end
     end
     
-    d = b + "A" + c
+    b.concat("A" + c)
+
   end
 end
