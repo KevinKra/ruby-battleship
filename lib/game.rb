@@ -52,6 +52,7 @@ class Game
     while (!detect_fleet_health(@human_player))
       take_turn
     end
+    display_game_end
   end
 
   def take_turn
@@ -88,11 +89,25 @@ class Game
 
   def display_turn_boards
     puts
-    puts "              ~~~ Turn #{@current_turn} ~~~"
+    puts "             ~~~ Turn #{@current_turn} ~~~"
     puts
     puts "=============COMPUTER BOARD============="
     puts
     puts @computer_board.render
+    puts
+    puts "==============PLAYER BOARD=============="
+    puts
+    puts @player_board.render(true)
+    puts
+  end
+
+  def display_game_end
+    puts
+    puts "           ~~~ GAME OVER ~~~"
+    puts
+    puts "=============COMPUTER BOARD============="
+    puts
+    puts @computer_board.render(true)
     puts
     puts "==============PLAYER BOARD=============="
     puts
