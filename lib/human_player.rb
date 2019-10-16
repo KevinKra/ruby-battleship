@@ -30,4 +30,17 @@ class HumanPlayer
       puts
     end
   end
+
+  def shoot(board)
+    input_coord = gets.chomp.upcase
+    puts
+      if board.cells.include?("#{input_coord}")
+        puts board.cells["#{input_coord}"].fire_upon
+      else
+        puts "Please enter a valid coordinate:"
+        print "> "
+        shoot(board)
+      end
+    puts
+  end
 end
