@@ -91,8 +91,12 @@ end
   end
 
   def place(ship, coordinates)
-    coordinates.each do |coordinate|
-      @cells[coordinate].place_ship(ship)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
+      end
+    else
+      p "That is not a valid placement. Please try again."
     end
   end
 
