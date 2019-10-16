@@ -17,6 +17,8 @@ game = Game.new
 # board.place(submarine, ["C1", "C2"])
 # binding.pry
 # computer_player.place_ships_on_board([cruiser, submarine], computer_board)
+
+
 game.init_game
 
 
