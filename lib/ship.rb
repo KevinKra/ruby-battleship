@@ -13,6 +13,7 @@ class Ship
   
   def hit
     @health -= 1
+    puts "#{@name} health: #{@health}"
     @sunk = true if @health == 0
   end
 end
