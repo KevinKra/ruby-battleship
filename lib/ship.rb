@@ -15,5 +15,6 @@ class Ship
     @health -= 1
     puts "#{@name} health: #{@health}"
     @sunk = true if @health == 0
+    puts "sunk? #{@sunk}"
   end
 end
