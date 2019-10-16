@@ -1,6 +1,6 @@
 class ComputerPlayer
   def initialize
-
+    @ships = []
   end
 
   def place_ships_on_board(total_ships, board)
@@ -8,6 +8,7 @@ class ComputerPlayer
       placement = generate_placement(ship, board)
       board.place(ship, placement)
     end
+    @ships = total_ships
     notify_placement_complete
   end
 
