@@ -28,6 +28,9 @@ class ComputerPlayer
   end
 
   def notify_placement_complete
+    puts
+    puts ">> Computer:"
     puts " I have laid out my ships on the grid."
+    puts
   end
 end

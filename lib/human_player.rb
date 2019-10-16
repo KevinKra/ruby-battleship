@@ -9,18 +9,25 @@ class HumanPlayer
   end
 
   def notify_start_game
-    puts "\n You now need to lay out your two ships." + "\n The Cruiser is two units long and the Submarine is three units long. \n"
+    print ">> Player:"
+    puts "\n You now need to lay out your two ships." + "\n The Cruiser is three units long and the Submarine is two units long. \n"
+    puts
   end
 
   def place_ships(ships, board)
     puts board.render(true)
     ships.each do |ship|
-      puts "Enter the squares for the #{ship.name} (#{ship.length} places):"
+      puts
+      puts ">> Player:"
+      puts " Enter the squares for the #{ship.name} (#{ship.length} places):"
+      print "> "
       input = gets.chomp.upcase().split(" ")
+      puts "------------"
+      puts
       # !still need to validate
-      p input
       board.place(ship, input)
       puts board.render(true)
+      puts
     end
   end
 end
