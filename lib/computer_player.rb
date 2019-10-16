@@ -8,6 +8,7 @@ class ComputerPlayer
       placement = generate_placement(ship, board)
       board.place(ship, placement)
     end
+    notify_placement_complete
   end
 
   def generate_placement(ship, board)
@@ -24,5 +25,9 @@ class ComputerPlayer
     possible_placement.length == ship.length ? 
       possible_placement : 
       possible_placement[0..ship.length - 1]
+  end
+
+  def notify_placement_complete
+    puts " I have laid out my ships on the grid."
   end
 end
