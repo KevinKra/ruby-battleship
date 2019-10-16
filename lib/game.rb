@@ -49,12 +49,12 @@ class Game
     # set up game and place ships
     setup_game
     # start turns
-    turn
-    turn
-    turn
+    while (!detect_fleet_health(@human_player))
+      take_turn
+    end
   end
 
-  def turn
+  def take_turn
     @current_turn += 1
     display_turn_boards
     shooting_phase
@@ -66,6 +66,24 @@ class Game
     print "> "
     @human_player.shoot(@computer_board)
     @computer_player.shoot(@player_board)
+  end
+
+  def detect_fleet_health(player)
+    output = player.ships.map do |ship|
+      ship.sunk?
+    end
+    puts output
+    puts sunk_ships = output.find_all { |ship_sunk| ship_sunk == true }.length
+    puts player.ships.length
+    if sunk_ships == player.ships.length
+      # end game
+      # there are the same number as sunk ships as there are ships.
+      true
+    else
+      # continue game
+      # there are less sunk ships than there are total ships.
+      false
+    end
   end
 
   def display_turn_boards
