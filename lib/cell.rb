@@ -27,18 +27,18 @@ class Cell
     @fired_upon
   end
 
-  def fire_upon
+  def fire_upon(computer = false)
     if @fired_upon == true
       return "You've already targeted this coordinate!"
     end
     @fired_upon = true
     if empty == true
       @status = "M"
-      "Your shot on #{@coordinate} was a miss."
+      computer ? "The computer's shot on #{@coordinate} was a miss." : "Your shot on #{@coordinate} was a miss."
     else
       @status = "H"
       @ship.hit
-      "That's a hit!"
+      computer ? "The computer just got a hit on #{@coordinate}!" : "That's a hit!"
     end
   end
 
