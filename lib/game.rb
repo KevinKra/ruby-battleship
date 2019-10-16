@@ -8,6 +8,7 @@ class Game
 
   def initialize
     @play_game = false
+    @current_turn = 0
     @computer_board = {}
     @player_board = {}
     @starting_ships = []
@@ -43,6 +44,7 @@ class Game
   end
 
   def start_game
+    # set up game and place ships
     submarine = Ship.new("Submarine", 2)
     cruiser = Ship.new("Cruiser", 3)
     computer_player = ComputerPlayer.new
@@ -52,5 +54,26 @@ class Game
     @player_board = Board.new
     computer_player.place_ships_on_board(starting_ships, @computer_board)
     human_player.start_game(starting_ships, @player_board)
+    # start turns
+    turn
+  end
+
+  def turn
+    @current_turn += 1
+    puts
+    puts "              ~~~ Turn #{@current_turn} ~~~"
+    puts
+    puts "=============COMPUTER BOARD============="
+    puts
+    puts @computer_board.render
+    puts
+    puts "==============PLAYER BOARD=============="
+    puts
+    puts @player_board.render(true)
+    puts
+  end
+
+  def display_turn_boards
+
   end
 end
