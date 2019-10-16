@@ -1,21 +1,18 @@
-# attr
-#
-# generate_game
-# sample
-# until
-#
-# board.sample(ship_placement)
-  #ship.length
-# until ship_placement
+require_relative "./board"
+require_relative "./cell"
+require_relative "./ship"
+require_relative "./cell"
+require_relative  "./play_game"
+require_relative "./computer_player"
+require_relative  "./live_player"
+
 class Round
 
 attr_accessor :computer_player, :live_player
 
   def initialize (computer_player = nil, live_player = nil)
-     @computer_board = {}
+     game_setup
      @computer_player = computer_player
-
-     @player_board = {}
      @live_player = live_player
   end
 
@@ -23,22 +20,17 @@ attr_accessor :computer_player, :live_player
 
     @computer_board = Board.new
     @computer_board.generate_game
-    @computer_player = Computer.new
+    @computer_player = ComputerPlayer.new
 
     @player_board = Board.new
     @player_board.generate_game
     @live_player = LivePlayer.new
-
-    require 'pry', binding.pry
 
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
     @computer_player.add_computer_ships(cruiser)
     @computer_player.add_computer_ships(submarine)
-
-    @live_player.add_player_ships(cruiser)
-    @live_player.add_player_ships(submarine)
   end
 
   def ships_placed_by_computer
@@ -51,35 +43,39 @@ attr_accessor :computer_player, :live_player
   def user_ship_placement
      player_ship_selection = gets.chomp
      if player_ship_selection == "Cruiser"
-       player_cruiser_placement
+       cruiser = Ship.new("Cruiser", 3)
+       submarine = Ship.new("Submarine", 2)
+       player_ship_placement(cruiser)
+       player_ship_placement(submarine)
      elsif player_ship_selection == "Submarine"
-       player_submarine_placement
-     #placeholder
-     else
-       puts "?"
+       submarine = Ship.new("Submarine", 2)
+       cruiser = Ship.new("Cruiser", 3)
+       player_ship_placement(submarine)
+       player_ship_placement(cruiser)
+       # require 'pry', binding.pry
      end
   end
 
-  def player_cruiser_placement
-    puts "You have selected to place the Cruiser. Please enter three coordinates:"
+#runner
+  def player_ship_placement(ship)
+    puts "You have selected to place the #{ship.name}. Please enter #{ship.length} coordinates:"
     print "> "
     player_ship_coordinates = gets.chomp
     split_player_coords = player_ship_coordinates.split(',')
-    until @player_boardgame.valid_placement?(ship, split_player_coords) == true
+    until @player_board.valid_placement?(ship, split_player_coords) == true
       puts "The coordinates are not valid, please try again."
       p "> "
+      player_ship_coordinates = gets.chomp
+      split_player_coords = player_ship_coordinates.split(',')
     end
-  end
-
-  def player_submarine_placement
-    puts "You have selected to place the Submarine. Please enter two coordinates:"
-    print "> "
-    player_ship_coordinates = gets.chomp
-    player_ship_coordinates.split(',')
+    puts "Your #{ship.name} has been placed. "
+    @player_board.place(ship, split_player_coords)
+    @player_board.render
   end
 
   def turn
   end
+
 end
   # The Turn
   # During the main game, players take turns firing at one another by selecting positions on the grid to attack.
