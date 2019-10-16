@@ -22,8 +22,12 @@ class Game
   end
 
   def handle_start_inputs
-    puts "Welcome to BATTLESHIP"
-    puts "Enter 'P' to play. Press 'Q' to quit."
+    puts
+    puts "=========================================="
+    puts
+    puts "         Welcome to BATTLESHIP"
+    puts "   Enter 'P' to play. Press 'Q' to quit."
+    puts
     print "> "
     user_input = gets.chomp.upcase
 
@@ -49,10 +53,11 @@ class Game
   def start_game
     # set up game and place ships
     setup_game
-    # start turns
-    while (!detect_fleet_health(@computer_player))
+    # take turns
+    until (detect_fleet_health(@computer_player) || detect_fleet_health(@human_player))
       take_turn
     end
+    # end game
     display_game_end
   end
 
@@ -72,12 +77,9 @@ class Game
 
   def detect_fleet_health(player)
     output = player.ships.map do |ship|
-      puts "SHIP sunk: #{ship.sunk?}, health: #{ship.health}, length: #{ship.length}, name: #{ship.name}"
       ship.sunk?
     end
-    puts output
-    puts sunk_ships = output.find_all { |ship_sunk| ship_sunk == true }.length
-    puts player.ships.length
+    sunk_ships = output.find_all { |ship_sunk| ship_sunk == true }.length
     if sunk_ships == player.ships.length
       # end game
       # there are the same number as sunk ships as there are ships.
@@ -90,7 +92,7 @@ class Game
   end
 
   def display_turn_boards
-    puts
+    puts 
     puts "             ~~~ Turn #{@current_turn} ~~~"
     puts
     puts "=============COMPUTER BOARD============="
@@ -104,9 +106,14 @@ class Game
   end
 
   def display_game_end
+    computer = detect_fleet_health(@human_player)
     puts
-    puts "           ~~~ GAME OVER ~~~"
+    puts "=========================================="
     puts
+    puts "             ~~~ GAME OVER ~~~"
+    computer ? human_wins(false) : human_wins(true)
+    puts 
+    puts "           ~~~ Final Result ~~~"
     puts "=============COMPUTER BOARD============="
     puts
     puts @computer_board.render(true)
@@ -115,6 +122,36 @@ class Game
     puts
     puts @player_board.render(true)
     puts
+    puts "Wish to play again? (Y/N)"
+    print "> "
+    user_input = gets.chomp.upcase
+    if user_input == "Y"
+      init_game
+    else
+      puts "Ok, Bye!"
+    end
+  end
+
+  def human_wins(outcome)
+    if outcome
+      puts 
+      puts "|========================================|"
+      puts "|==== WINNER ==== WINNER ==== WINNER ====|"
+      puts "|========================================|"
+      puts "|----------->   YOU WON!!    <-----------|"
+      puts "|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|"
+      puts "|========================================|"
+      puts
+    else
+      puts 
+      puts "|========================================|"
+      puts "|==== LOSER! ==== LOSER! ==== LOSER! ====|"
+      puts "|========================================|"
+      puts "|----------->   YOU LOST!   <------------|"
+      puts "|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|"
+      puts "|================SORRY===================|"
+      puts
+    end
   end
 
    def setup_game
