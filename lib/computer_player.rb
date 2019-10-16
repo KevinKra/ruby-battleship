@@ -1,4 +1,5 @@
 class ComputerPlayer
+  attr_reader :ships
   def initialize
     @ships = []
   end
