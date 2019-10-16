@@ -96,7 +96,13 @@ end
         @cells[coordinate].place_ship(ship)
       end
     else
-      p "That is not a valid placement. Please try again:"
+      puts
+      puts ">> Player:"
+      puts " Those are invalid coordinates. Please try again:"
+      print "> "
+      coordinates = gets.chomp.upcase.split(" ")
+      puts
+      place(ship, coordinates)
     end
   end
 
