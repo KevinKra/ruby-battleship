@@ -12,6 +12,8 @@ class Game
     @computer_board = {}
     @player_board = {}
     @starting_ships = []
+    @human_player = {}
+    @computer_player = {}
   end
 
   def init_game
@@ -45,15 +47,7 @@ class Game
 
   def start_game
     # set up game and place ships
-    submarine = Ship.new("Submarine", 2)
-    cruiser = Ship.new("Cruiser", 3)
-    computer_player = ComputerPlayer.new
-    human_player = HumanPlayer.new
-    starting_ships = [cruiser, submarine]
-    @computer_board = Board.new
-    @player_board = Board.new
-    computer_player.place_ships_on_board(starting_ships, @computer_board)
-    human_player.start_game(starting_ships, @player_board)
+    setup_game
     # start turns
     turn
   end
@@ -68,12 +62,7 @@ class Game
     puts
     puts "Enter the coordinate for your shot:"
     print "> "
-    input_coord = gets.chomp.upcase
-    puts
-    puts @computer_board.cells["#{input_coord}"].fire_upon
-    puts
-    # puts @computer_board.render
-    # puts
+    @human_player.shoot(@computer_board)
   end
 
   def display_turn_boards
@@ -89,4 +78,16 @@ class Game
     puts @player_board.render(true)
     puts
   end
+
+   def setup_game
+    submarine = Ship.new("Submarine", 2)
+    cruiser = Ship.new("Cruiser", 3)
+    @computer_player = ComputerPlayer.new
+    @human_player = HumanPlayer.new
+    starting_ships = [cruiser, submarine]
+    @computer_board = Board.new
+    @player_board = Board.new
+    @computer_player.place_ships_on_board(starting_ships, @computer_board)
+    @human_player.start_game(starting_ships, @player_board)
+   end
 end
