@@ -60,6 +60,23 @@ class Game
 
   def turn
     @current_turn += 1
+    display_turn_boards
+    shoot_prompt
+  end
+
+  def shoot_prompt
+    puts
+    puts "Enter the coordinate for your shot:"
+    print "> "
+    input_coord = gets.chomp.upcase
+    puts
+    puts @computer_board.cells["#{input_coord}"].fire_upon
+    puts
+    # puts @computer_board.render
+    # puts
+  end
+
+  def display_turn_boards
     puts
     puts "              ~~~ Turn #{@current_turn} ~~~"
     puts
@@ -71,9 +88,5 @@ class Game
     puts
     puts @player_board.render(true)
     puts
-  end
-
-  def display_turn_boards
-
   end
 end
