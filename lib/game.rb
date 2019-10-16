@@ -11,7 +11,8 @@ class Game
     @current_turn = 0
     @computer_board = {}
     @player_board = {}
-    @starting_ships = []
+    @starting_ships_computer = []
+    @starting_ships_player = []
     @human_player = {}
     @computer_player = {}
   end
@@ -49,7 +50,7 @@ class Game
     # set up game and place ships
     setup_game
     # start turns
-    while (!detect_fleet_health(@human_player))
+    while (!detect_fleet_health(@human_player) || !detect_fleet_health(@computer_player))
       take_turn
     end
     display_game_end
@@ -116,14 +117,17 @@ class Game
   end
 
    def setup_game
-    submarine = Ship.new("Submarine", 2)
-    cruiser = Ship.new("Cruiser", 3)
+    submarine1 = Ship.new("Submarine", 2)
+    cruiser1 = Ship.new("Cruiser", 3)
+    submarine2 = Ship.new("Submarine", 2)
+    cruiser2 = Ship.new("Cruiser", 3)
     @computer_player = ComputerPlayer.new
     @human_player = HumanPlayer.new
-    starting_ships = [cruiser, submarine]
+    @starting_ships_computer = [cruiser1, submarine1]
+    @starting_ships_player = [cruiser2, submarine2]
     @computer_board = Board.new
     @player_board = Board.new
-    @computer_player.place_ships_on_board(starting_ships, @computer_board)
-    @human_player.start_game(starting_ships, @player_board)
+    @computer_player.place_ships_on_board(@starting_ships_computer, @computer_board)
+    @human_player.start_game(@starting_ships_player, @player_board)
    end
 end
