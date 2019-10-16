@@ -18,8 +18,8 @@ class ComputerPlayer
     starting_letter = open_cells.sample.split('')[0] 
 
     possible_placement = []
-    until possible_placement.length >= ship.length do 
-      possible_placement = open_cells.select {|coord| coord.split('').include?(starting_letter)}
+    until possible_placement.length >= ship.length do
+      possible_placement = open_cells.select {|cell| cell.split('').include?(starting_letter)}
     end
 
     possible_placement.length == ship.length ? 
