@@ -27,6 +27,11 @@ class ComputerPlayer
       possible_placement[0..ship.length - 1]
   end
 
+  def shoot(board)
+    valid_targets = board.cells.select {|key,value| value.fired_upon == false}.map() {|k,v| k}
+    puts board.cells["#{valid_targets.sample}"].fire_upon(true)
+  end
+
   def notify_placement_complete
     puts
     puts ">> Computer:"
