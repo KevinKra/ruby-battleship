@@ -29,7 +29,7 @@ class Board
     coords_empty_status = []
     if ship.length == desired_coords.length
       desired_coords.each do |coord|
-        coords_empty_status << @cells.empty?
+        coords_empty_status << @cells[coord].empty?
         # check each coordinate and shovel boolean accordingly.
       end
     else
