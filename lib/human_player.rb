@@ -1,11 +1,13 @@
 class HumanPlayer
+  attr_reader :ships
   def initialize
-    
+    @ships = []
   end
 
   def start_game(total_ships, board)
     notify_start_game
     place_ships(total_ships, board)
+    @ships = total_ships
   end
 
   def notify_start_game
