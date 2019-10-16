@@ -50,7 +50,7 @@ class Game
     # set up game and place ships
     setup_game
     # start turns
-    while (!detect_fleet_health(@human_player) || !detect_fleet_health(@computer_player))
+    while (!detect_fleet_health(@computer_player))
       take_turn
     end
     display_game_end
@@ -72,6 +72,7 @@ class Game
 
   def detect_fleet_health(player)
     output = player.ships.map do |ship|
+      puts "SHIP sunk: #{ship.sunk?}, health: #{ship.health}, length: #{ship.length}, name: #{ship.name}"
       ship.sunk?
     end
     puts output
