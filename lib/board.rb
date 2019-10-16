@@ -108,7 +108,7 @@ end
 
   def render(show_true_state = false)
     a = []
-    b = "  1 2 3 4 \n "
+    b = "   1 2 3 4 \n "
     c = ""
     arr = ["B", "C", "D"]
     if !show_true_state
