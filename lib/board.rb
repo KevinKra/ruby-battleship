@@ -1,4 +1,4 @@
-require 'pry'
+require_relative "./cell.rb"
 
 class Board
 
@@ -96,7 +96,7 @@ end
         @cells[coordinate].place_ship(ship)
       end
     else
-      p "That is not a valid placement. Please try again."
+      p "That is not a valid placement. Please try again:"
     end
   end
 
