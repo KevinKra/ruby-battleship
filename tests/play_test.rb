@@ -12,6 +12,7 @@ class GameTest < Minitest::Test
   end
 
   def test_it_greets_player_on_game_start
+    skip
     line1 = "Welcome to BATTLESHIP Enter 'P' to play. Press 'Q' to quit. > "
     line2 = "Enter 'P' to play. Press 'Q' to quit."
     line3 = "> "
