@@ -10,7 +10,7 @@ class CellTest < Minitest::Test
     @ship = Ship.new("cruiser", 2)
     @cell_1 = Cell.new("b4")
   end
-  # it should exist 
+  # it should exist
   def test_it_should_exist
     assert_instance_of Cell, @cell_1
   end
@@ -49,7 +49,7 @@ class CellTest < Minitest::Test
     assert_equal true, @cell_2.empty
     @cell_2.place_ship(@ship)
     assert_equal false, @cell_2.empty
-    response = "there is already a ship placed in this cell!"
+    response = "There is already a ship placed in this cell!"
     assert_equal response, @cell_2.place_ship(@ship)
   end
 
@@ -67,17 +67,17 @@ class CellTest < Minitest::Test
   end
 
   def test_it_returns_a_string_if_cell_is_empty_and_is_fired_upon
-    response = "you missed lul"
+    response = "Your shot on B4 was a miss."
     assert_equal response, @cell_1.fire_upon
     assert_equal @ship.health, @ship.length
     assert_equal true, @cell_1.fired_upon
   end
 
   def test_it_returns_a_string_if_cell_has_already_been_fired_upon
-    response = "you missed lul"
-    response_2 = "You've already targeted this coord, wut u doin"
+    response = "Your shot on B4 was a miss."
+    response_2 = "You've already targeted this coordinate!"
     # test misses on cell
-    assert_equal response, @cell_1.fire_upon
+     assert_equal response, @cell_1.fire_upon
     assert_equal response_2, @cell_1.fire_upon
     assert_equal @ship.health, @ship.length
     # test hits on cell

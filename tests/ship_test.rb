@@ -9,7 +9,7 @@ class ShipTest < Minitest::Test
   end
   # it should exist
   def test_it_should_exist
-    assert_instance_of Ship, @ship 
+    assert_instance_of Ship, @ship
   end
   # newly instantiated objects should accept a name and length argument
   def test_it_has_a_name_and_length_argument
@@ -19,7 +19,7 @@ class ShipTest < Minitest::Test
 
   # it should return a value when health when object.health is invoked
   def test_it_has_a_health_attribute
-    assert_equal 3, @ship.health 
+    assert_equal 3, @ship.health
   end
 
   # it should return boolean when object.sunk? method is invoked
@@ -32,9 +32,11 @@ class ShipTest < Minitest::Test
   def test_hit_reduces_the_health_of_the_ship
     assert_equal @ship.health, @ship.length
     @ship.hit
-    assert_equal @ship.health, @ship.length - 1 
+    assert_equal @ship.health, @ship.length - 1
     @ship.hit
     assert_equal @ship.health, @ship.length - 2
+    @ship.hit
+    assert_equal true, @ship.sunk?
   end
 
   # it should return true when object.sunk? is called and @health equals 0
